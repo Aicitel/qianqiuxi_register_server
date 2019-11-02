@@ -12,6 +12,9 @@ public interface UserMapper {
     @Insert("insert into user ( `username`, `password` ) values (#{user.username}, #{user.password})")
     int insert(@Param("user")User user);
 
-    @Select("select count(1) from user where username = #{user.username} and password = #{user.password}")
-    int checkAuth(@Param("user")User user);
+    @Select("select id from user where username = #{user.username} and password = #{user.password}")
+    Integer checkAuth(@Param("user")User user);
+
+    @Select("select id from user where username = #{user.username}")
+    Integer getUserId(@Param("user")User user);
 }

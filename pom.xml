@@ -10,7 +10,7 @@
 
     <properties>
         <spring.boot.mainclass>net.qianqiuxi.register.Application</spring.boot.mainclass>
-        <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
+        <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
     </properties>
 
     <dependencies>
@@ -27,6 +27,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
 

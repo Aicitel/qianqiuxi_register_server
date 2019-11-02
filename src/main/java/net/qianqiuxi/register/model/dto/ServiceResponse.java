@@ -9,25 +9,25 @@ public class ServiceResponse implements Serializable {
        SUCCEED, FAIL
     }
 
-    @JsonProperty(value = "errorCode")
-    private Integer errorCode;
+    @JsonProperty(value = "code")
+    private Integer code;
     @JsonProperty(value = "message")
     private String message;
     @JsonProperty(value = "status")
     private Status status;
 
-    public ServiceResponse(Integer errorCode, Status status, String message) {
-        this.errorCode = errorCode;
+    public ServiceResponse(Integer code, Status status, String message) {
+        this.code = code;
         this.message = message;
         this.status = status;
     }
 
-    public Integer getErrorCode() {
-        return errorCode;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setErrorCode(Integer errorCode) {
-        this.errorCode = errorCode;
+    public void setCode(Integer errorCode) {
+        this.code = code;
     }
 
     public String getMessage() {

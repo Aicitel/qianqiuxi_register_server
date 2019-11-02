@@ -1,5 +1,6 @@
 package net.qianqiuxi.register.controller;
 
+import net.qianqiuxi.register.auth.annotation.NoneAuth;
 import net.qianqiuxi.register.model.dto.ServiceResponse;
 import net.qianqiuxi.register.model.request.RegisterRequest;
 import net.qianqiuxi.register.service.RegisterService;
@@ -25,6 +26,7 @@ public class RegisterController {
      * @param header request header
      * @return Register result
      */
+    @NoneAuth
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ServiceResponse register(
             @RequestBody RegisterRequest registerRequest, @RequestHeader Map<String,String> header){
