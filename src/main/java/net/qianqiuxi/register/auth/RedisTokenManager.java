@@ -37,7 +37,7 @@ public class RedisTokenManager implements TokenManager {
 
     @Override
     public boolean checkTokenForUser(Token token) {
-        if(token != null) {
+        if(token != null && token.getToken()!=null && token.getUserId()!=null) {
             String userId = String.valueOf(token.getUserId());
             if(Objects.equals(redisClient.getValueByKey(userId), token.getToken())){
                 //refresh the token expire time
