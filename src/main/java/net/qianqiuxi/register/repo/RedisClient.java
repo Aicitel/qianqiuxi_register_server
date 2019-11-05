@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -14,6 +15,7 @@ public class RedisClient {
 
     private static final Logger logger = LoggerFactory.getLogger(RedisClient.class);
     public static final long TOKEN_EXPIRES_SECOND = 60 * 60 * 24 * 30;
+    public static final long GAME_TOKEN_EXPIRES_SECOND = 60 * 60 * 24;
 
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -69,5 +71,14 @@ public class RedisClient {
             logger.error("Redis update key expire time fail ", e);
         }
         return result;
+    }
+
+    /**
+     * Remove the key-value for input key
+     * @param key key to remove
+     * @return whether remove succeed
+     */
+    public boolean removeKeyValue(String key){
+        return Optional.ofNullable(redisTemplate.delete(key)).orElse(false);
     }
 }

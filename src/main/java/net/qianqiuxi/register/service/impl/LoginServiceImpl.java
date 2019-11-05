@@ -36,7 +36,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public ServiceResponse auth(String username, String tokenStr) {
         try {
-            Integer userId = userMapper.getUserId(new User(username, null));
+            Integer userId = userMapper.getUserIdByName(username);
             if(tokenManager.checkTokenForUser(new Token(userId, tokenStr))){
                 return new LoginResponse(SUCCEED, ServiceResponse.Status.SUCCEED, "succeed",tokenStr);
             } else {

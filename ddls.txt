@@ -1,0 +1,27 @@
+CREATE TABLE `userdetail` (
+ `id` int(11) NOT NULL,
+ `win` int(11) DEFAULT 0,
+ `lose` int(11) DEFAULT 0,
+ `description` varchar(255) DEFAULT NULL,
+ PRIMARY KEY (`id`),
+ foreign key(id) references user(id)
+ ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+ 
+CREATE TABLE `game` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `player1_id` int(11) DEFAULT NULL,
+  `player2_id` int(11) DEFAULT NULL,
+  `winner` int(11) DEFAULT NULL,
+  `match_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `detail` text,
+  PRIMARY KEY (`id`),
+  KEY `player1_id` (`player1_id`),
+  KEY `player2_id` (`player2_id`),
+  CONSTRAINT `game_ibfk_1` FOREIGN KEY (`player1_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `game_ibfk_2` FOREIGN KEY (`player2_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+ alter table userdetail add index id_index (id);
+ 
+ alter table game modify player1_id int(11) NULL;
