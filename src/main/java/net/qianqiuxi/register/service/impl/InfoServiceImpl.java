@@ -83,10 +83,13 @@ public class InfoServiceImpl implements InfoService {
                     if(this.match(savedUpdateRequest, updateRequest)) {
                         Integer player1Id = userMapper.getUserIdByName(updateRequest.getUsername());
                         Integer player2Id = userMapper.getUserIdByName(updateRequest.getOpponent());
-                        Game game = new Game(player1Id, player2Id, updateRequest.isWin()?0:1, updateRequest.getGameToken());
+                        Integer winner = updateRequest.isWin()?0:(savedUpdateRequest.isWin()?1:-1);
+                        Game game = new Game(player1Id, player2Id, winner, updateRequest.getGameToken());
                         gameMapper.update(game);
-                        userDetailMapper.updateWin(new UserDetail(updateRequest.isWin()?player1Id:player2Id));
-                        userDetailMapper.updateLose(new UserDetail(updateRequest.isWin()?player2Id:player1Id));
+                        if(!Objects.equals(winner, -1)) {
+                            userDetailMapper.updateWin(new UserDetail(updateRequest.isWin() ? player1Id : player2Id));
+                            userDetailMapper.updateLose(new UserDetail(updateRequest.isWin() ? player2Id : player1Id));
+                        }
                         redisClient.removeKeyValue(savedUpdateRequest.getGameToken());
                     } else {
                         return new ServiceResponse(INVALID_TOKEN, ServiceResponse.Status.FAIL, "save game fail");
@@ -114,6 +117,8 @@ public class InfoServiceImpl implements InfoService {
         return Objects.equals(updateRequest1.getGameToken(), updateRequest2.getGameToken())
                 &&Objects.equals(updateRequest1.getUsername(), updateRequest2.getOpponent())
                 &&Objects.equals(updateRequest1.getOpponent(), updateRequest2.getUsername())
-                &&( 1 == (updateRequest1.isWin()?1:0) + (updateRequest2.isWin()?1:0));
+                && (( 1 == (updateRequest1.isWin()?1:0) + (updateRequest2.isWin()?1:0))
+                    //shit, forget the game could be tied....
+                    || Objects.equals(updateRequest1.isWin(), Boolean.FALSE) && Objects.equals(updateRequest1.isWin(), Boolean.FALSE) )  ;
     }
 }
